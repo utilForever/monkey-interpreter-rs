@@ -31,8 +31,23 @@ impl<'a> Lexer<'a> {
         self.read_position += 1;
     }
 
-    pub fn next_token(&self) -> Token {
-        Token::Illegal
+    pub fn next_token(&mut self) -> Token {
+        let tok = match self.ch {
+            b'=' => Token::Assign,
+            b';' => Token::Semicolon,
+            b'(' => Token::Lparen,
+            b')' => Token::Rparen,
+            b',' => Token::Comma,
+            b'+' => Token::Plus,
+            b'{' => Token::Lbrace,
+            b'}' => Token::Rbrace,
+            0 => Token::Eof,
+            _ => Token::Illegal,
+        };
+
+        self.read_char();
+
+        tok
     }
 }
 
