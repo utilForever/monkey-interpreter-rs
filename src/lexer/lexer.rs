@@ -32,6 +32,8 @@ impl<'a> Lexer<'a> {
     }
 
     pub fn next_token(&mut self) -> Token {
+        self.skip_whitespace();
+
         let tok = match self.ch {
             b'=' => Token::Assign,
             b';' => Token::Semicolon,
@@ -51,6 +53,19 @@ impl<'a> Lexer<'a> {
         self.read_char();
 
         tok
+    }
+
+    fn skip_whitespace(&mut self) {
+        loop {
+            match self.ch {
+                b' ' | b'\t' => {
+                    self.read_char();
+                }
+                _ => {
+                    break;
+                }
+            }
+        }
     }
 
     fn read_identifier(&mut self) -> Token {
