@@ -41,6 +41,9 @@ impl<'a> Lexer<'a> {
             b'+' => Token::Plus,
             b'{' => Token::Lbrace,
             b'}' => Token::Rbrace,
+            b'a'..=b'z' | b'A'..=b'Z' | b'_' => {
+                return self.read_identifier();
+            }
             0 => Token::Eof,
             _ => Token::Illegal,
         };
@@ -48,6 +51,10 @@ impl<'a> Lexer<'a> {
         self.read_char();
 
         tok
+    }
+
+    fn read_identifier(&mut self) -> Token {
+        Token::Illegal
     }
 }
 
