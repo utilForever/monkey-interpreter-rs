@@ -54,7 +54,21 @@ impl<'a> Lexer<'a> {
     }
 
     fn read_identifier(&mut self) -> Token {
-        Token::Illegal
+        let position = self.position;
+
+        loop {
+            match self.ch {
+                b'a'..=b'z' | b'A'..=b'Z' | b'_' => {
+                    self.read_char();
+                }
+                _ => {
+                    break;
+                }
+            }
+        }
+
+        let literal = &self.input[position..self.position];
+        Token::Ident(String::from(literal))
     }
 }
 
