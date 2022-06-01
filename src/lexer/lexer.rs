@@ -100,7 +100,7 @@ let add = fn(x, y) {
             Token::Let,
             Token::Ident(String::from("add")),
             Token::Assign,
-            Token::Func,
+            Token::Function,
             Token::Lparen,
             Token::Ident(String::from("x")),
             Token::Comma,
