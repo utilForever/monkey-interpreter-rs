@@ -61,7 +61,7 @@ impl<'a> Lexer<'a> {
     fn skip_whitespace(&mut self) {
         loop {
             match self.ch {
-                b' ' | b'\t' => {
+                b' ' | b'\t' | b'\n' | b'\r' => {
                     self.read_char();
                 }
                 _ => {
