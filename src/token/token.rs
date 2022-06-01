@@ -4,8 +4,8 @@ pub enum Token {
     Eof,
 
     // Identifiers + Literals
-    Ident,
-    Int,
+    Ident(String),
+    Int(i64),
 
     // Operators
     Assign,
