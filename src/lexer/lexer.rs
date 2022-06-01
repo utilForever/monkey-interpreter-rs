@@ -68,7 +68,12 @@ impl<'a> Lexer<'a> {
         }
 
         let literal = &self.input[position..self.position];
-        Token::Ident(String::from(literal))
+
+        match literal {
+            "fn" => Token::Function,
+            "let" => Token::Let,
+            _ => Token::Ident(String::from(literal)),
+        }
     }
 }
 
