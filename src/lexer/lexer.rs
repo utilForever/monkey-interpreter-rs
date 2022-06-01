@@ -46,6 +46,9 @@ impl<'a> Lexer<'a> {
             b'a'..=b'z' | b'A'..=b'Z' | b'_' => {
                 return self.read_identifier();
             }
+            b'0'..=b'9' => {
+                return self.read_number();
+            }
             0 => Token::Eof,
             _ => Token::Illegal,
         };
@@ -89,6 +92,24 @@ impl<'a> Lexer<'a> {
             "let" => Token::Let,
             _ => Token::Ident(String::from(literal)),
         }
+    }
+
+    fn read_number(&mut self) -> Token {
+        let position = self.position;
+
+        loop {
+            match self.ch {
+                b'0'..=b'9' => {
+                    self.read_char();
+                }
+                _ => {
+                    break;
+                }
+            }
+        }
+
+        let literal = &self.input[position..self.position];
+        Token::Int(literal.parse::<i64>().unwrap())
     }
 }
 
