@@ -96,6 +96,11 @@ impl<'a> Lexer<'a> {
         match literal {
             "fn" => Token::Function,
             "let" => Token::Let,
+            "true" => Token::Bool(true),
+            "false" => Token::Bool(false),
+            "if" => Token::If,
+            "else" => Token::Else,
+            "return" => Token::Return,
             _ => Token::Ident(String::from(literal)),
         }
     }
