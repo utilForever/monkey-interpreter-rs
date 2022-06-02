@@ -128,6 +128,8 @@ let add = fn(x, y) {
 };
 
 let result = add(five, ten);
+!-/*5;
+5 < 10 > 5;
 "#;
         let tests = vec![
             Token::Let,
@@ -165,6 +167,18 @@ let result = add(five, ten);
             Token::Comma,
             Token::Ident(String::from("ten")),
             Token::Rparen,
+            Token::Semicolon,
+            Token::Bang,
+            Token::Minus,
+            Token::Slash,
+            Token::Asterisk,
+            Token::Int(5),
+            Token::Semicolon,
+            Token::Int(5),
+            Token::LessThan,
+            Token::Int(10),
+            Token::GreaterThan,
+            Token::Int(5),
             Token::Semicolon,
             Token::Eof,
         ];
