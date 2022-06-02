@@ -36,11 +36,17 @@ impl<'a> Lexer<'a> {
 
         let tok = match self.ch {
             b'=' => Token::Assign,
+            b'+' => Token::Plus,
+            b'-' => Token::Minus,
+            b'!' => Token::Bang,
+            b'*' => Token::Asterisk,
+            b'/' => Token::Slash,
+            b'<' => Token::LessThan,
+            b'>' => Token::GreaterThan,
+            b',' => Token::Comma,
             b';' => Token::Semicolon,
             b'(' => Token::Lparen,
             b')' => Token::Rparen,
-            b',' => Token::Comma,
-            b'+' => Token::Plus,
             b'{' => Token::Lbrace,
             b'}' => Token::Rbrace,
             b'a'..=b'z' | b'A'..=b'Z' | b'_' => {
