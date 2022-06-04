@@ -35,10 +35,24 @@ impl<'a> Lexer<'a> {
         self.skip_whitespace();
 
         let tok = match self.ch {
-            b'=' => Token::Assign,
+            b'=' => {
+                if self.peek_char() == b'=' {
+                    self.read_char();
+                    Token::Equal
+                } else {
+                    Token::Assign
+                }
+            }
             b'+' => Token::Plus,
             b'-' => Token::Minus,
-            b'!' => Token::Bang,
+            b'!' => {
+                if self.peek_char() == b'=' {
+                    self.read_char();
+                    Token::NotEqual
+                } else {
+                    Token::Bang
+                }
+            }
             b'*' => Token::Asterisk,
             b'/' => Token::Slash,
             b'<' => Token::LessThan,
