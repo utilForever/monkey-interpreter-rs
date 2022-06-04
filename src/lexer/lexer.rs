@@ -77,6 +77,14 @@ impl<'a> Lexer<'a> {
         }
     }
 
+    fn peek_char(&mut self) -> u8 {
+        if self.read_position >= self.input.len() {
+            0
+        } else {
+            self.input.as_bytes()[self.read_position]
+        }
+    }
+
     fn read_identifier(&mut self) -> Token {
         let position = self.position;
 
