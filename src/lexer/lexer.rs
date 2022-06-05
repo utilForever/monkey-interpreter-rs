@@ -55,8 +55,22 @@ impl<'a> Lexer<'a> {
             }
             b'*' => Token::Asterisk,
             b'/' => Token::Slash,
-            b'<' => Token::LessThan,
-            b'>' => Token::GreaterThan,
+            b'<' => {
+                if self.peek_char() == b'=' {
+                    self.read_char();
+                    Token::LessThanEqual
+                } else {
+                    Token::LessThan
+                }
+            }
+            b'>' => {
+                if self.peek_char() == b'=' {
+                    self.read_char();
+                    Token::GreaterThanEqual
+                } else {
+                    Token::GreaterThan
+                }
+            }
             b',' => Token::Comma,
             b';' => Token::Semicolon,
             b'(' => Token::Lparen,
