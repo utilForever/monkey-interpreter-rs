@@ -143,11 +143,16 @@ impl<'a> Lexer<'a> {
 
     fn read_number(&mut self) -> Token {
         let position = self.position;
+        let mut is_floating_point = false;
 
         loop {
             match self.ch {
                 b'0'..=b'9' => {
                     self.read_char();
+                }
+                b'.' => {
+                    self.read_char();
+                    is_floating_point = true;
                 }
                 _ => {
                     break;
@@ -156,7 +161,12 @@ impl<'a> Lexer<'a> {
         }
 
         let literal = &self.input[position..self.position];
-        Token::Int(literal.parse::<i64>().unwrap())
+
+        if is_floating_point {
+            Token::Double(literal.parse::<f64>().unwrap())
+        } else {
+            Token::Int(literal.parse::<i64>().unwrap())
+        }
     }
 }
 
