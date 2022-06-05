@@ -188,6 +188,13 @@ if (5 < 10) {
 10 != 9;
 10 <= 9;
 10 >= 9;
+
+let pi = 3.14;
+let e = 2.71;
+let mul = fn(x, y) {
+    x * y;
+};
+let answer = mul(pi, e);
 "#;
         let tests = vec![
             Token::Let,
@@ -270,6 +277,42 @@ if (5 < 10) {
             Token::Int(10),
             Token::GreaterThanEqual,
             Token::Int(9),
+            Token::Semicolon,
+            Token::Let,
+            Token::Ident(String::from("pi")),
+            Token::Assign,
+            Token::Double(3.14),
+            Token::Semicolon,
+            Token::Let,
+            Token::Ident(String::from("e")),
+            Token::Assign,
+            Token::Double(2.71),
+            Token::Semicolon,
+            Token::Let,
+            Token::Ident(String::from("mul")),
+            Token::Assign,
+            Token::Function,
+            Token::Lparen,
+            Token::Ident(String::from("x")),
+            Token::Comma,
+            Token::Ident(String::from("y")),
+            Token::Rparen,
+            Token::Lbrace,
+            Token::Ident(String::from("x")),
+            Token::Asterisk,
+            Token::Ident(String::from("y")),
+            Token::Semicolon,
+            Token::Rbrace,
+            Token::Semicolon,
+            Token::Let,
+            Token::Ident(String::from("answer")),
+            Token::Assign,
+            Token::Ident(String::from("mul")),
+            Token::Lparen,
+            Token::Ident(String::from("pi")),
+            Token::Comma,
+            Token::Ident(String::from("e")),
+            Token::Rparen,
             Token::Semicolon,
             Token::Eof,
         ];
