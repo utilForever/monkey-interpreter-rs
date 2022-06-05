@@ -172,6 +172,8 @@ if (5 < 10) {
 
 10 == 10;
 10 != 9;
+10 <= 9;
+10 >= 9;
 "#;
         let tests = vec![
             Token::Let,
@@ -245,6 +247,14 @@ if (5 < 10) {
             Token::Semicolon,
             Token::Int(10),
             Token::NotEqual,
+            Token::Int(9),
+            Token::Semicolon,
+            Token::Int(10),
+            Token::LessThanEqual,
+            Token::Int(9),
+            Token::Semicolon,
+            Token::Int(10),
+            Token::GreaterThanEqual,
             Token::Int(9),
             Token::Semicolon,
             Token::Eof,
