@@ -6,6 +6,7 @@ pub enum Token {
     // Identifiers + Literals
     Ident(String),
     Int(i64),
+    Double(f64),
     Bool(bool),
 
     // Operators
