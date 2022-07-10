@@ -108,6 +108,13 @@ impl<'a> Parser<'a> {
             _ => None,
         }
     }
+
+    fn parse_int_expression(&mut self) -> Option<Expression> {
+        match &self.cur_token {
+            Token::Int(ref mut int) => Some(Expression::Literal(Literal::Int(int.clone()))),
+            _ => None,
+        }
+    }
 }
 
 #[cfg(test)]
