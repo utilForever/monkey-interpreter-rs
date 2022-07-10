@@ -26,3 +26,41 @@ impl<'a> Parser<'a> {
         self.peek_token = self.lexer.next_token();
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use crate::ast::ast::{Expression, Identifier, Statement};
+    use crate::lexer::lexer::Lexer;
+    use crate::parser::parser::Parser;
+
+    fn test_let_statement() {
+        let input = r#"
+let x = 5;
+let y = 10;
+let foobar = 838383;
+"#;
+        let mut l = Lexer::new(input);
+        let mut p = Parser::new(l);
+
+        let program = p.parse_program();
+        check_parse_errors(&mut parser);
+
+        assert_eq!(
+            vec![
+                Statement::Let(
+                    Identifier(String::from("x")),
+                    Expression::Literal(Literal::Int(5))
+                ),
+                Statement::Let(
+                    Identifier(String::from("y")),
+                    Expression::Literal(Literal::Int(10))
+                ),
+                Statement::Let(
+                    Identifier(String::from("foobar")),
+                    Expression::Literal(Literal::Int(838383)),
+                ),
+            ],
+            program,
+        );
+    }
+}
