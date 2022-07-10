@@ -35,6 +35,15 @@ impl<'a> Parser<'a> {
         self.peek_token == token
     }
 
+    fn expect_peek(&mut self, token: Token) -> bool {
+        if self.peek_token_is(token.clone()) {
+            self.next_token();
+            true
+        } else {
+            false
+        }
+    }
+
     pub fn parse_program(&mut self) -> Program {
         let mut program = Vec::new();
 
