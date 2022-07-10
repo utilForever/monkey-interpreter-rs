@@ -48,6 +48,35 @@ impl<'a> Parser<'a> {
             _ => None,
         }
     }
+
+    fn parse_let_statement(&mut self) -> Option<Statement> {
+        match &self.next_token {
+            Token::Ident(_) => self.next_token(),
+            _ => return None,
+        };
+
+        let identifier = match self.parse_identifier() {
+            Some(identifier) => identifier,
+            None => return None,
+        };
+
+        if !self.expect_peek(Token::Assign) {
+            return None;
+        }
+
+        self.next_token();
+
+        let expression = match self.parse_expression() {
+            Some(expression) => expression,
+            None => return None,
+        };
+
+        while !self.cur_token_is(Token::Semicolon) {
+            self.next_token();
+        }
+
+        Some(Statement::Let(identifier, expression))
+    }
 }
 
 #[cfg(test)]
