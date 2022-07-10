@@ -33,6 +33,10 @@ mod tests {
     use crate::lexer::lexer::Lexer;
     use crate::parser::parser::Parser;
 
+    fn check_parse_errors(parser: &mut Parser) {
+        // TODO: Check if there are any parse errors
+    }
+
     fn test_let_statement() {
         let input = r#"
 let x = 5;
