@@ -1,3 +1,5 @@
+pub struct Identifier(pub String);
+
 pub enum Statement {}
 
 pub enum Expression {}
