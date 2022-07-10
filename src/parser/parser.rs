@@ -1,4 +1,4 @@
-use crate::ast::ast::{Identifier, Program, Statement};
+use crate::ast::ast::{Expression, Identifier, Program, Statement};
 use crate::lexer::lexer::Lexer;
 use crate::token::token::Token;
 
@@ -93,6 +93,13 @@ impl<'a> Parser<'a> {
         }
 
         Some(Statement::Let(identifier, expression))
+    }
+
+    fn parse_expression(&mut self) -> Option<Expression> {
+        match self.cur_token {
+            Token::Int(_) => self.parse_int_expression(),
+            _ => None,
+        }
     }
 
     fn parse_identifier(&mut self) -> Option<Identifier> {
