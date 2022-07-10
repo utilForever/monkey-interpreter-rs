@@ -15,9 +15,14 @@ impl<'a> Parser<'a> {
             peek_token: Token::Eof,
         };
 
-        // parser.next_token();
-        // parser.next_token();
+        parser.next_token();
+        parser.next_token();
 
         parser
+    }
+
+    fn next_token(&mut self) {
+        self.cur_token = self.peek_token.clone();
+        self.peek_token = self.lexer.next_token();
     }
 }
