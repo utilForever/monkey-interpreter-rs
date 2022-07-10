@@ -27,6 +27,10 @@ impl<'a> Parser<'a> {
         self.peek_token = self.lexer.next_token();
     }
 
+    fn cur_token_is(&mut self, token: Token) -> bool {
+        self.cur_token == token
+    }
+
     pub fn parse_program(&mut self) -> Program {
         let mut program = Vec::new();
 
