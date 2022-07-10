@@ -1,4 +1,4 @@
-use crate::ast::ast::Program;
+use crate::ast::ast::{Program, Statement};
 use crate::lexer::lexer::Lexer;
 use crate::token::token::Token;
 
@@ -40,6 +40,13 @@ impl<'a> Parser<'a> {
         }
 
         program
+    }
+
+    fn parse_statement(&mut self) -> Option<Statement> {
+        match self.cur_token {
+            Token::Let => self.parse_let_statement(),
+            _ => None,
+        }
     }
 }
 
