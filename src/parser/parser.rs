@@ -57,6 +57,10 @@ impl<'a> Parser<'a> {
         parser
     }
 
+    fn get_errors(&mut self) -> Vec<ParseError> {
+        self.errors.clone()
+    }
+
     fn next_token(&mut self) {
         self.cur_token = self.peek_token.clone();
         self.peek_token = self.lexer.next_token();
