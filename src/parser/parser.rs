@@ -57,6 +57,7 @@ impl<'a> Parser<'a> {
         parser
     }
 
+    #[allow(dead_code)]
     fn get_errors(&mut self) -> Vec<ParseError> {
         self.errors.clone()
     }
@@ -79,8 +80,19 @@ impl<'a> Parser<'a> {
             self.next_token();
             true
         } else {
+            self.error_next_token(token);
             false
         }
+    }
+
+    fn error_next_token(&mut self, token: Token) {
+        self.errors.push(ParseError::new(
+            ParseErrorKind::UnexpectedToken,
+            format!(
+                "expected next token to be {:?}, got {:?} instead",
+                token, self.peek_token
+            ),
+        ));
     }
 
     pub fn parse_program(&mut self) -> Program {
