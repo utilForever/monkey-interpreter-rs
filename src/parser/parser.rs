@@ -17,6 +17,18 @@ impl fmt::Display for ParseErrorKind {
     }
 }
 
+#[derive(Debug, Clone)]
+pub struct ParseError {
+    kind: ParseErrorKind,
+    msg: String,
+}
+
+impl ParseError {
+    fn new(kind: ParseErrorKind, msg: String) -> Self {
+        ParseError { kind, msg }
+    }
+}
+
 pub struct Parser<'a> {
     lexer: Lexer<'a>,
     cur_token: Token,
