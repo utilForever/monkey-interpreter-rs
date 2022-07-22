@@ -29,6 +29,12 @@ impl ParseError {
     }
 }
 
+impl fmt::Display for ParseError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{}: {}", self.kind, self.msg)
+    }
+}
+
 pub struct Parser<'a> {
     lexer: Lexer<'a>,
     cur_token: Token,
