@@ -1,3 +1,5 @@
+use std::fmt;
+
 use crate::ast::ast::{Expression, Identifier, Literal, Program, Statement};
 use crate::lexer::lexer::Lexer;
 use crate::token::token::Token;
@@ -5,6 +7,14 @@ use crate::token::token::Token;
 #[derive(Debug, Clone)]
 pub enum ParseErrorKind {
     UnexpectedToken,
+}
+
+impl fmt::Display for ParseErrorKind {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match *self {
+            ParseErrorKind::UnexpectedToken => write!(f, "Unexpected Token"),
+        }
+    }
 }
 
 pub struct Parser<'a> {
