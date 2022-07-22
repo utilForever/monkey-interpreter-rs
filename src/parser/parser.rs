@@ -39,6 +39,7 @@ pub struct Parser<'a> {
     lexer: Lexer<'a>,
     cur_token: Token,
     peek_token: Token,
+    errors: Vec<ParseError>,
 }
 
 impl<'a> Parser<'a> {
@@ -47,6 +48,7 @@ impl<'a> Parser<'a> {
             lexer,
             cur_token: Token::Eof,
             peek_token: Token::Eof,
+            errors: Vec::new(),
         };
 
         parser.next_token();
