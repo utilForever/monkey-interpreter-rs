@@ -1,4 +1,4 @@
-use crate::ast::ast::{Expression, Identifier, Program, Statement};
+use crate::ast::ast::{Expression, Identifier, Literal, Program, Statement};
 use crate::lexer::lexer::Lexer;
 use crate::token::token::Token;
 
@@ -111,7 +111,7 @@ impl<'a> Parser<'a> {
 
     fn parse_int_expression(&mut self) -> Option<Expression> {
         match &self.cur_token {
-            Token::Int(ref mut int) => Some(Expression::Literal(Literal::Int(int.clone()))),
+            Token::Int(int) => Some(Expression::Literal(Literal::Int(int.clone()))),
             _ => None,
         }
     }
@@ -119,7 +119,7 @@ impl<'a> Parser<'a> {
 
 #[cfg(test)]
 mod tests {
-    use crate::ast::ast::{Expression, Identifier, Statement};
+    use crate::ast::ast::{Expression, Identifier, Literal, Statement};
     use crate::lexer::lexer::Lexer;
     use crate::parser::parser::Parser;
 
@@ -127,17 +127,18 @@ mod tests {
         // TODO: Check if there are any parse errors
     }
 
+    #[test]
     fn test_let_statement() {
         let input = r#"
 let x = 5;
 let y = 10;
 let foobar = 838383;
 "#;
-        let mut l = Lexer::new(input);
+        let l = Lexer::new(input);
         let mut p = Parser::new(l);
 
         let program = p.parse_program();
-        check_parse_errors(&mut parser);
+        check_parse_errors(&mut p);
 
         assert_eq!(
             vec![
