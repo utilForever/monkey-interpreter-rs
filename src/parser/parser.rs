@@ -2,6 +2,11 @@ use crate::ast::ast::{Expression, Identifier, Literal, Program, Statement};
 use crate::lexer::lexer::Lexer;
 use crate::token::token::Token;
 
+#[derive(Debug, Clone)]
+pub enum ParseErrorKind {
+    UnexpectedToken,
+}
+
 pub struct Parser<'a> {
     lexer: Lexer<'a>,
     cur_token: Token,
