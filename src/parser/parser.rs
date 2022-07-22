@@ -163,7 +163,21 @@ mod tests {
     use crate::parser::parser::Parser;
 
     fn check_parse_errors(parser: &mut Parser) {
-        // TODO: Check if there are any parse errors
+        let errors = parser.get_errors();
+
+        if errors.is_empty() {
+            return;
+        }
+
+        println!("\n");
+        println!("parser has {} errors", errors.len());
+
+        for error in errors {
+            println!("parse error: {:?}", error);
+        }
+
+        println!("\n");
+        panic!("failed");
     }
 
     #[test]
