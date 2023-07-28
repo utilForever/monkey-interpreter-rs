@@ -178,6 +178,7 @@ impl<'a> Parser<'a> {
     fn parse_expression(&mut self, _precedence: Precedence) -> Option<Expression> {
         // Prefix
         let left = match self.current_token {
+            Token::Ident(_) => self.parse_identifier_expression(),
             Token::Int(_) => self.parse_int_expression(),
             _ => None,
         };
@@ -189,6 +190,13 @@ impl<'a> Parser<'a> {
         match &self.current_token {
             Token::Ident(ident) => Some(Identifier(ident.clone())),
             _ => None,
+        }
+    }
+
+    fn parse_identifier_expression(&mut self) -> Option<Expression> {
+        match self.parse_identifier() {
+            Some(identifier) => Some(Expression::Identifier(identifier)),
+            None => None,
         }
     }
 
