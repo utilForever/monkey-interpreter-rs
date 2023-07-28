@@ -37,7 +37,7 @@ impl fmt::Display for ParseError {
 
 pub struct Parser<'a> {
     lexer: Lexer<'a>,
-    cur_token: Token,
+    current_token: Token,
     peek_token: Token,
     errors: Vec<ParseError>,
 }
@@ -46,7 +46,7 @@ impl<'a> Parser<'a> {
     pub fn new(lexer: Lexer<'a>) -> Self {
         let mut parser = Parser {
             lexer,
-            cur_token: Token::Eof,
+            current_token: Token::Eof,
             peek_token: Token::Eof,
             errors: Vec::new(),
         };
@@ -63,12 +63,12 @@ impl<'a> Parser<'a> {
     }
 
     fn bump(&mut self) {
-        self.cur_token = self.peek_token.clone();
+        self.current_token = self.peek_token.clone();
         self.peek_token = self.lexer.next_token();
     }
 
     fn current_token_is(&mut self, token: Token) -> bool {
-        self.cur_token == token
+        self.current_token == token
     }
 
     fn next_token_is(&mut self, token: Token) -> bool {
@@ -98,7 +98,7 @@ impl<'a> Parser<'a> {
     pub fn parse_program(&mut self) -> Program {
         let mut program = Vec::new();
 
-        while self.cur_token != Token::Eof {
+        while self.current_token != Token::Eof {
             match self.parse_statement() {
                 Some(statement) => program.push(statement),
                 None => {}
@@ -111,7 +111,7 @@ impl<'a> Parser<'a> {
     }
 
     fn parse_statement(&mut self) -> Option<Statement> {
-        match self.cur_token {
+        match self.current_token {
             Token::Let => self.parse_let_statement(),
             Token::Return => self.parse_return_statement(),
             _ => None,
@@ -163,21 +163,21 @@ impl<'a> Parser<'a> {
     }
 
     fn parse_expression(&mut self) -> Option<Expression> {
-        match self.cur_token {
+        match self.current_token {
             Token::Int(_) => self.parse_int_expression(),
             _ => None,
         }
     }
 
     fn parse_identifier(&mut self) -> Option<Identifier> {
-        match &self.cur_token {
+        match &self.current_token {
             Token::Ident(ident) => Some(Identifier(ident.clone())),
             _ => None,
         }
     }
 
     fn parse_int_expression(&mut self) -> Option<Expression> {
-        match &self.cur_token {
+        match &self.current_token {
             Token::Int(int) => Some(Expression::Literal(Literal::Int(int.clone()))),
             _ => None,
         }
