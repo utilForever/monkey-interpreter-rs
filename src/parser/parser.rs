@@ -71,12 +71,12 @@ impl<'a> Parser<'a> {
         self.cur_token == token
     }
 
-    fn peek_token_is(&mut self, token: Token) -> bool {
+    fn next_token_is(&mut self, token: Token) -> bool {
         self.peek_token == token
     }
 
     fn expect_next_token(&mut self, token: Token) -> bool {
-        if self.peek_token_is(token.clone()) {
+        if self.next_token_is(token.clone()) {
             self.bump();
             true
         } else {
