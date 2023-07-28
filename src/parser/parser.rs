@@ -38,7 +38,7 @@ impl fmt::Display for ParseError {
 pub struct Parser<'a> {
     lexer: Lexer<'a>,
     current_token: Token,
-    peek_token: Token,
+    next_token: Token,
     errors: Vec<ParseError>,
 }
 
@@ -47,7 +47,7 @@ impl<'a> Parser<'a> {
         let mut parser = Parser {
             lexer,
             current_token: Token::Eof,
-            peek_token: Token::Eof,
+            next_token: Token::Eof,
             errors: Vec::new(),
         };
 
@@ -63,8 +63,8 @@ impl<'a> Parser<'a> {
     }
 
     fn bump(&mut self) {
-        self.current_token = self.peek_token.clone();
-        self.peek_token = self.lexer.next_token();
+        self.current_token = self.next_token.clone();
+        self.next_token = self.lexer.next_token();
     }
 
     fn current_token_is(&mut self, token: Token) -> bool {
@@ -72,7 +72,7 @@ impl<'a> Parser<'a> {
     }
 
     fn next_token_is(&mut self, token: Token) -> bool {
-        self.peek_token == token
+        self.next_token == token
     }
 
     fn expect_next_token(&mut self, token: Token) -> bool {
@@ -90,7 +90,7 @@ impl<'a> Parser<'a> {
             ParseErrorKind::UnexpectedToken,
             format!(
                 "expected next token to be {:?}, got {:?} instead",
-                token, self.peek_token
+                token, self.next_token
             ),
         ));
     }
@@ -119,7 +119,7 @@ impl<'a> Parser<'a> {
     }
 
     fn parse_let_statement(&mut self) -> Option<Statement> {
-        match &self.peek_token {
+        match &self.next_token {
             Token::Ident(_) => self.bump(),
             _ => return None,
         };
