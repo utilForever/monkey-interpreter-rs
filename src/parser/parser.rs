@@ -67,7 +67,7 @@ impl<'a> Parser<'a> {
         self.peek_token = self.lexer.next_token();
     }
 
-    fn cur_token_is(&mut self, token: Token) -> bool {
+    fn current_token_is(&mut self, token: Token) -> bool {
         self.cur_token == token
     }
 
@@ -139,7 +139,7 @@ impl<'a> Parser<'a> {
             None => return None,
         };
 
-        while !self.cur_token_is(Token::Semicolon) {
+        while !self.current_token_is(Token::Semicolon) {
             self.bump();
         }
 
