@@ -298,4 +298,20 @@ return 993322;
             program,
         );
     }
+
+    #[test]
+    fn test_integer_literal_expression() {
+        let input = "5;";
+
+        let l = Lexer::new(input);
+        let mut p = Parser::new(l);
+
+        let program = p.parse_program();
+        check_parse_errors(&mut p);
+
+        assert_eq!(
+            vec![Statement::Expression(Expression::Literal(Literal::Int(5)))],
+            program,
+        );
+    }
 }
