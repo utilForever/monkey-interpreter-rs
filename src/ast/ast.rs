@@ -5,6 +5,7 @@ pub struct Identifier(pub String);
 pub enum Statement {
     Let(Identifier, Expression),
     Return(Expression),
+    Expression(Expression),
 }
 
 #[derive(Debug, PartialEq)]
