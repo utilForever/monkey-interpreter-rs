@@ -75,7 +75,7 @@ impl<'a> Parser<'a> {
         self.peek_token == token
     }
 
-    fn expect_peek(&mut self, token: Token) -> bool {
+    fn expect_next_token(&mut self, token: Token) -> bool {
         if self.peek_token_is(token.clone()) {
             self.bump();
             true
@@ -128,7 +128,7 @@ impl<'a> Parser<'a> {
             None => return None,
         };
 
-        if !self.expect_peek(Token::Assign) {
+        if !self.expect_next_token(Token::Assign) {
             return None;
         }
 
