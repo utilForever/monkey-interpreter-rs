@@ -1,6 +1,6 @@
 use std::fmt;
 
-use crate::ast::ast::{Expression, Identifier, Literal, Program, Statement};
+use crate::ast::ast::{Expression, Identifier, Literal, Precedence, Program, Statement};
 use crate::lexer::lexer::Lexer;
 use crate::token::token::Token;
 
@@ -135,7 +135,7 @@ impl<'a> Parser<'a> {
 
         self.bump();
 
-        let expression = match self.parse_expression() {
+        let expression = match self.parse_expression(Precedence::Lowest) {
             Some(expression) => expression,
             None => return None,
         };
@@ -150,7 +150,7 @@ impl<'a> Parser<'a> {
     fn parse_return_statement(&mut self) -> Option<Statement> {
         self.bump();
 
-        let expression = match self.parse_expression() {
+        let expression = match self.parse_expression(Precedence::Lowest) {
             Some(expression) => expression,
             None => return None,
         };
@@ -175,11 +175,14 @@ impl<'a> Parser<'a> {
         }
     }
 
-    fn parse_expression(&mut self) -> Option<Expression> {
-        match self.current_token {
+    fn parse_expression(&mut self, _precedence: Precedence) -> Option<Expression> {
+        // Prefix
+        let left = match self.current_token {
             Token::Int(_) => self.parse_int_expression(),
             _ => None,
-        }
+        };
+
+        left
     }
 
     fn parse_identifier(&mut self) -> Option<Identifier> {
