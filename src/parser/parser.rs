@@ -223,4 +223,27 @@ let foobar = 838383;
             program,
         );
     }
+
+    #[test]
+    fn test_return_statement() {
+        let input = r#"
+return 5;
+return 10;
+return 993322;
+"#;
+        let l = Lexer::new(input);
+        let mut p = Parser::new(l);
+
+        let program = p.parse_program();
+        check_parse_errors(&mut p);
+
+        assert_eq!(
+            vec![
+                Statement::Return(Expression::Literal(Literal::Int(5))),
+                Statement::Return(Expression::Literal(Literal::Int(10))),
+                Statement::Return(Expression::Literal(Literal::Int(993322))),
+            ],
+            program,
+        );
+    }
 }
