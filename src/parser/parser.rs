@@ -215,6 +215,7 @@ let x = 5;
 let y = 10;
 let foobar = 838383;
 "#;
+
         let l = Lexer::new(input);
         let mut p = Parser::new(l);
 
@@ -247,6 +248,7 @@ return 5;
 return 10;
 return 993322;
 "#;
+
         let l = Lexer::new(input);
         let mut p = Parser::new(l);
 
@@ -259,6 +261,24 @@ return 993322;
                 Statement::Return(Expression::Literal(Literal::Int(10))),
                 Statement::Return(Expression::Literal(Literal::Int(993322))),
             ],
+            program,
+        );
+    }
+
+    #[test]
+    fn test_identifier_expression() {
+        let input = "foobar;";
+
+        let l = Lexer::new(input);
+        let mut p = Parser::new(l);
+
+        let program = p.parse_program();
+        check_parse_errors(&mut p);
+
+        assert_eq!(
+            vec![Statement::Expression(Expression::Identifier(Identifier(
+                String::from("foobar")
+            )))],
             program,
         );
     }
