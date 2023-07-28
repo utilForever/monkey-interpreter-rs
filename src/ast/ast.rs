@@ -20,3 +20,14 @@ pub enum Literal {
 }
 
 pub type Program = Vec<Statement>;
+
+#[derive(Debug, Clone, PartialEq, PartialOrd)]
+pub enum Precedence {
+    Lowest,
+    Equals,
+    LessGreater,
+    Sum,
+    Product,
+    Prefix,
+    Call,
+}
