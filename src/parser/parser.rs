@@ -51,8 +51,8 @@ impl<'a> Parser<'a> {
             errors: Vec::new(),
         };
 
-        parser.next_token();
-        parser.next_token();
+        parser.bump();
+        parser.bump();
 
         parser
     }
@@ -62,7 +62,7 @@ impl<'a> Parser<'a> {
         self.errors.clone()
     }
 
-    fn next_token(&mut self) {
+    fn bump(&mut self) {
         self.cur_token = self.peek_token.clone();
         self.peek_token = self.lexer.next_token();
     }
@@ -77,7 +77,7 @@ impl<'a> Parser<'a> {
 
     fn expect_peek(&mut self, token: Token) -> bool {
         if self.peek_token_is(token.clone()) {
-            self.next_token();
+            self.bump();
             true
         } else {
             self.error_next_token(token);
@@ -104,7 +104,7 @@ impl<'a> Parser<'a> {
                 None => {}
             }
 
-            self.next_token();
+            self.bump();
         }
 
         program
@@ -119,7 +119,7 @@ impl<'a> Parser<'a> {
 
     fn parse_let_statement(&mut self) -> Option<Statement> {
         match &self.peek_token {
-            Token::Ident(_) => self.next_token(),
+            Token::Ident(_) => self.bump(),
             _ => return None,
         };
 
@@ -132,7 +132,7 @@ impl<'a> Parser<'a> {
             return None;
         }
 
-        self.next_token();
+        self.bump();
 
         let expression = match self.parse_expression() {
             Some(expression) => expression,
@@ -140,7 +140,7 @@ impl<'a> Parser<'a> {
         };
 
         while !self.cur_token_is(Token::Semicolon) {
-            self.next_token();
+            self.bump();
         }
 
         Some(Statement::Let(identifier, expression))
